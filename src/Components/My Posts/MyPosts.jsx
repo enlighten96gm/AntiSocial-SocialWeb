@@ -13,7 +13,7 @@ console.log("rener");
     let postElements = 
     [...props.posts]
     .reverse()
-    .map(p =>  <Post message={p.message} key={p.id} likesCount={p.likesCount} />)
+    .map(p =>  <Post key={p.id} message={p.message} key={p.id} likesCount={p.likesCount} />)
     
     let onAddPost = (values) => {
         props.addPost(values.newPostText);

@@ -6,3 +6,16 @@
     height: 250px;
     border-radius: 5px;
 }
+.loh {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+.contact {
+    padding-left: 10px;
+}
+.formSummaryError {
+    border: red 1px solid;
+    padding: 5px;
+    color: red;
+}

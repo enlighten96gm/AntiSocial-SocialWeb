@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import News from './Components/News/News';
@@ -22,9 +22,17 @@ const DialogsContainer = React.lazy(() => import ('./Components/Dialogs/DialogsC
 const ProfileContainer = React.lazy(() => import ('./Components/Profile/ProfileContainer'))
 
 class App extends Component {
+  catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    alert("some erorr")
+    // console.error(promiseRejectionEvent)
+  }
 
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+  }
+  componentWillUnmount() {
+    window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
   }
 
   render() {
@@ -37,14 +45,16 @@ class App extends Component {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
-          <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
-          <Route path="/users" render={ () => <UsersContainer /> }/>
-          <Route path="/news" render={ () => <News /> }/>
-          <Route path="/music" render={ () => <Music /> }/>
-          <Route path="/settings" render={ () => <Settings /> }/>
-          <Route path="/login" render={ () => <Login /> }/>
-          <Route path="/counter" render={() => <Counter /> }/>
+          <Switch>
+            <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
+            <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
+            <Route path="/users" render={ () => <UsersContainer /> }/>
+            <Route path="/news" render={ () => <News /> }/>
+            <Route path="/music" render={ () => <Music /> }/>
+            <Route path="/settings" render={ () => <Settings /> }/>
+            <Route path="/login" render={ () => <Login /> }/>
+            <Route path="/counter" render={() => <Counter /> }/>
+          </Switch>
         </div>
       </div>
   );
